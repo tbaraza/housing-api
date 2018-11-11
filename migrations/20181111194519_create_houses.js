@@ -3,6 +3,7 @@ exports.up = function (knex, Promise) {
     knex.schema.createTable('houses', (table) => {
       table.increments('id').primary();
       table.string('name');
+      table.unique('name');
       table.string('location');
       table.timestamps(true, true);
     })

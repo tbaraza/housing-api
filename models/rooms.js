@@ -1,5 +1,4 @@
 const Model = require('./model');
-const { House } = require('./index');
 
 class Room extends Model {
   static get tableName() {
@@ -7,6 +6,9 @@ class Room extends Model {
   }
 
   static get relationMappings() {
+    // Import models here to prevent require loops.
+    const House = require('./houses');
+
     return {
       rooms: {
         relation: Model.BelongsToOneRelation,

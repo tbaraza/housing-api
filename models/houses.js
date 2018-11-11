@@ -1,5 +1,5 @@
 const Model = require('./model');
-const { Room } = require('./index');
+const Room = require('./rooms');
 
 class House extends Model {
   static get tableName() {

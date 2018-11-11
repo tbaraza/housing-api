@@ -5,9 +5,13 @@ exports.seed = function (knex, Promise) {
     .then(() => {
       // Inserts seed entries
       return knex('houses').insert([
-        { id: 1, name: 'Peniel House', location: 'Kibera, Nairobi' },
-        { id: 2, name: 'Victory House', location: 'Ngumba estate, Nairobi' },
-        { id: 3, name: 'Lerna House', location: 'Mariakani, Mombasa' }
+        { id: 10000, name: 'Peniel House', location: 'Kibera, Nairobi' },
+        {
+          id: 20000,
+          name: 'Victory House',
+          location: 'Ngumba estate, Nairobi'
+        },
+        { id: 3000, name: 'Lerna House', location: 'Mariakani, Mombasa' }
       ]);
     });
 };

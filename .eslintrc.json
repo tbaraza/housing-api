@@ -3,15 +3,17 @@
     "es6": true,
     "node": true
   },
-  "extends": "eslint:recommended",
+  "extends": "hapi",
   "parserOptions": {
     "ecmaVersion": 2017,
     "sourceType": "module"
   },
+  "plugins": ["hapi"],
   "rules": {
     "indent": ["error", 2],
     "linebreak-style": ["error", "unix"],
     "quotes": ["error", "single"],
-    "semi": ["error", "always"]
+    "semi": ["error", "always"],
+    "hapi/hapi-scope-start": ["off"]
   }
 }

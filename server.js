@@ -9,7 +9,7 @@ const server = Hapi.server({
 server.route({
   method: 'GET',
   path: '/',
-  handler: (request, h) => 'hello world today'
+  handler: (request, h) => 'Welcome to new beginnings'
 });
 
 // Start the server
@@ -25,8 +25,9 @@ const start = async () => {
   console.log('Server running at:', server.info.uri);
 };
 
-process.on('unhandledRejection', err => {
+process.on('unhandledRejection', (err) => {
   console.error(err);
 });
 
 start();
+module.exports = server;

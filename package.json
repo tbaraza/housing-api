@@ -12,8 +12,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "boom": "^7.2.2",
+    "dotenv": "^6.1.0",
     "hapi": "^17.7.0",
-    "hapi-pino": "^5.1.0"
+    "hapi-pino": "^5.1.0",
+    "joi": "^14.0.5",
+    "knex": "^0.15.2",
+    "objection": "^1.4.0",
+    "pg": "^7.6.1"
   },
   "devDependencies": {
     "chai": "^4.2.0",

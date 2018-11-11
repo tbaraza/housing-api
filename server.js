@@ -1,16 +1,13 @@
 const Hapi = require('hapi');
+const Routes = require('./routes');
 
 const server = Hapi.server({
   host: 'localhost',
   port: 9000
 });
 
-// Add the route
-server.route({
-  method: 'GET',
-  path: '/',
-  handler: (request, h) => 'Welcome to new beginnings'
-});
+// Add routes
+server.route(Routes);
 
 // Start the server
 const start = async () => {

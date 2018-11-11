@@ -2,7 +2,6 @@
   "script": "server.js",
   "ext": "js",
   "ignore": ["node_modules"],
-  "watch": ["server.js"],
   "env": {
     "NODE_ENV": "development"
   }

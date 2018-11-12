@@ -125,12 +125,12 @@ describe('Houses endpoints', () => {
     it('It should return an error when I try to delete a non existing house', async () => {
       const response = await Server.inject({
         method: 'DELETE',
-        url: '/houses/34'
+        url: '/houses/111'
       });
       expect(response).to.have.status(404);
       expect(response.result.error).to.equal('Not Found');
       expect(response.result.message).to.equal(
-        'House with id 34 does not exist'
+        'House with id 111 does not exist'
       );
     });
   });

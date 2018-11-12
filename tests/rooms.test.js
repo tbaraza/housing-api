@@ -55,13 +55,13 @@ describe('Houses endpoints', () => {
         method: 'PUT',
         url: '/rooms/2000',
         payload: {
-          house_id: 3000
+          house_id: 20000
         }
       });
       expect(response).to.have.status(200);
       expect(response.result.success).to.be.true;
       expect(response.result).to.be.an('object');
-      expect(response.result.room.house_id).to.equal(3000);
+      expect(response.result.room.house_id).to.equal(20000);
     });
 
     it('It should delete a room successfully', async () => {

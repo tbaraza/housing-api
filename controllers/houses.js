@@ -18,13 +18,7 @@ module.exports = {
         .findById(id)
         .eager('rooms');
       if (!house) {
-        return res
-          .response({
-            error: 'Not Found',
-            message: `House with id ${id} does not exist`,
-            success: false
-          })
-          .code(404);
+        return Boom.notFound(`House with id ${id} does not exist`);
       }
 
       return res.response({ house, success: true }).code(200);
@@ -48,13 +42,7 @@ module.exports = {
       const { id } = req.params;
       let house = await House.query().findById(id);
       if (!house) {
-        return res
-          .response({
-            error: 'Not Found',
-            message: `House with id ${id} does not exist`,
-            success: false
-          })
-          .code(404);
+        return Boom.notFound(`House with id ${id} does not exist`);
       }
 
       house = await House.query().patchAndFetchById(id, req.payload);
@@ -65,23 +53,15 @@ module.exports = {
     }
   },
   delete: async (req, res) => {
-    // Find a way to perform soft delete
+    // TO DO: Find a way to perform soft delete
     try {
       const { id } = req.params;
       const house = await House.query().findById(id);
       if (!house) {
-        return res
-          .response({
-            error: 'Not Found',
-            message: `House with id ${id} does not exist`,
-            success: false
-          })
-          .code(404);
+        return Boom.notFound(`House with id ${id} does not exist`);
       }
 
-      await House.query()
-        .debug()
-        .deleteById(10000);
+      await House.query().deleteById(id);
       return res
         .response({ message: 'House deleted successfully', success: true })
         .code(200);

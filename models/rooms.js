@@ -10,7 +10,7 @@ class Room extends Model {
     const House = require('./houses');
 
     return {
-      rooms: {
+      house: {
         relation: Model.BelongsToOneRelation,
         modelClass: House,
         join: {

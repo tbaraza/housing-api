@@ -18,10 +18,13 @@ module.exports = {
         .findById(id)
         .eager('rooms');
       if (!house) {
-        return res.response({
-          message: `House with ${id} does not exist`,
-          success: false
-        });
+        return res
+          .response({
+            error: 'Not Found',
+            message: `House with ${id} does not exist`,
+            success: false
+          })
+          .code(404);
       }
 
       return res.response({ house, success: true }).code(200);
@@ -45,36 +48,40 @@ module.exports = {
       const { id } = req.params;
       let house = await House.query().findById(id);
       if (!house) {
-        return res.response({
-          message: `House with ${id} does not exist`,
-          success: false
-        });
+        return res
+          .response({
+            error: 'Not Found',
+            message: `House with ${id} does not exist`,
+            success: false
+          })
+          .code(404);
       }
 
       house = await House.query().patchAndFetchById(id, req.payload);
       return res.response({ house, success: true }).code(200);
     }
     catch (err) {
-      req.log('error updating', err);
       return Boom.internal(err.message);
     }
   },
   delete: async (req, res) => {
+    // find a way to perform sof delete
     try {
       const { id } = req.params;
       const house = await House.query().findById(id);
       if (!house) {
-        return res.response({
-          message: `House with ${id} does not exist`,
-          success: false
-        });
+        return res
+          .response({
+            error: 'Not Found',
+            message: `House with ${id} does not exist`,
+            success: false
+          })
+          .code(404);
       }
 
-      await House.query()
-        .delete()
-        .where('id', id);
+      await House.query().deleteById(id);
       return res
-        .response({ message: 'house deleted successfully', success: true })
+        .response({ message: 'House deleted successfully', success: true })
         .code(200);
     }
     catch (err) {

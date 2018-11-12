@@ -1,3 +1,10 @@
 const HouseRoutes = require('./houses');
+const RoomRoutes = require('./rooms');
 
-module.exports = [...HouseRoutes];
+const index = {
+  method: 'GET',
+  path: '/',
+  handler: (request, h) => 'Welcome to new beginnings'
+};
+
+module.exports = [...HouseRoutes, ...RoomRoutes, index];

@@ -65,7 +65,7 @@ module.exports = {
     }
   },
   delete: async (req, res) => {
-    // find a way to perform sof delete
+    // Find a way to perform soft delete
     try {
       const { id } = req.params;
       const house = await House.query().findById(id);
@@ -79,12 +79,15 @@ module.exports = {
           .code(404);
       }
 
-      await House.query().deleteById(id);
+      await House.query()
+        .debug()
+        .deleteById(10000);
       return res
         .response({ message: 'House deleted successfully', success: true })
         .code(200);
     }
     catch (err) {
+      console.log('Booom', err);
       return Boom.internal(err.message);
     }
   }

@@ -3,7 +3,10 @@ exports.up = function (knex, Promise) {
     knex.schema.createTable('rooms', (table) => {
       table.increments('id').primary();
       table.integer('room_number');
-      table.integer('house_id').references('houses.id');
+      table
+        .integer('house_id')
+        .references('houses.id')
+        .onDelete('SET NULL');
       table.enu('status', [0, 1, 2]);
       table.timestamps(true, true);
     })

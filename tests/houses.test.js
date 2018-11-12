@@ -2,13 +2,11 @@ const Chai = require('chai');
 const Http = require('chai-http');
 const Server = require('../server.js');
 const { House } = require('../models');
-const { Room } = require('../models');
 
 const { expect } = Chai;
 Chai.use(Http);
 
 const destroyHouse = async () => {
-  // await Room.query().delete();
   await House.query()
     .delete()
     .where('name', 'ASIL');
@@ -71,16 +69,16 @@ describe('Houses endpoints', () => {
       expect(response.result.house.name).to.equal('Sizzlin House');
     });
 
-    // it('It should delete a house successfully', async () => {
-    //   const response = await Server.inject({
-    //     method: 'DELETE',
-    //     url: '/houses/3000'
-    //   });
-    //   expect(response).to.have.status(200);
-    //   expect(response.result.success).to.be.true;
-    //   expect(response.result).to.be.an('object');
-    //   expect(response.result.message).to.equal('house deleted successfully');
-    // });
+    it('It should delete a house successfully', async () => {
+      const response = await Server.inject({
+        method: 'DELETE',
+        url: '/houses/3000'
+      });
+      expect(response).to.have.status(200);
+      expect(response.result.success).to.be.true;
+      expect(response.result).to.be.an('object');
+      expect(response.result.message).to.equal('House deleted successfully');
+    });
   });
 
   context('When I visit the /houses routes passing incorrect data', () => {
@@ -114,6 +112,16 @@ describe('Houses endpoints', () => {
         payload: {
           name: 'Crower House'
         }
+      });
+      expect(response).to.have.status(404);
+      expect(response.result.error).to.equal('Not Found');
+      expect(response.result.message).to.equal('House with 34 does not exist');
+    });
+
+    it('It should return an error when I try to delete a non existing house', async () => {
+      const response = await Server.inject({
+        method: 'DELETE',
+        url: '/houses/34'
       });
       expect(response).to.have.status(404);
       expect(response.result.error).to.equal('Not Found');

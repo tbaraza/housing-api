@@ -15,13 +15,12 @@ const destroyHouse = async () => {
 describe('Houses endpoints', () => {
   before(destroyHouse);
   after(destroyHouse);
-  context('When I visit /houses endpoint passing the correct data', () => {
+  context('When I visit /houses endpoints passing the correct data', () => {
     it('should return an array of houses when I fetch all houses', async () => {
       const response = await Server.inject({
         method: 'GET',
         url: '/houses'
       });
-      console.log('heeee', response.result);
       expect(response).to.have.status(200);
       expect(response.result.houses).to.be.an('array');
       expect(response.result.success).to.be.true;
@@ -53,6 +52,7 @@ describe('Houses endpoints', () => {
       expect(response.result).to.be.an('object');
       expect(response.result.house.name).to.equal('Peniel House');
       expect(response.result.house.location).to.equal('Kibera, Nairobi');
+      expect(response.result.house.id).to.equal(10000);
     });
 
     it('It should successfully update a house', async () => {
@@ -81,7 +81,7 @@ describe('Houses endpoints', () => {
     });
   });
 
-  context('When I visit the /houses routes passing incorrect data', () => {
+  context('When I visit the /houses endpoints passing incorrect data', () => {
     it('It should return an error when I do not pass all the required fields when creating a house', async () => {
       const response = await Server.inject({
         method: 'POST',
@@ -102,7 +102,9 @@ describe('Houses endpoints', () => {
       });
       expect(response).to.have.status(404);
       expect(response.result.error).to.equal('Not Found');
-      expect(response.result.message).to.equal('House with 34 does not exist');
+      expect(response.result.message).to.equal(
+        'House with id 34 does not exist'
+      );
     });
 
     it('It should return an error when I try to update a non existing house', async () => {
@@ -115,7 +117,9 @@ describe('Houses endpoints', () => {
       });
       expect(response).to.have.status(404);
       expect(response.result.error).to.equal('Not Found');
-      expect(response.result.message).to.equal('House with 34 does not exist');
+      expect(response.result.message).to.equal(
+        'House with id 34 does not exist'
+      );
     });
 
     it('It should return an error when I try to delete a non existing house', async () => {
@@ -125,7 +129,9 @@ describe('Houses endpoints', () => {
       });
       expect(response).to.have.status(404);
       expect(response.result.error).to.equal('Not Found');
-      expect(response.result.message).to.equal('House with 34 does not exist');
+      expect(response.result.message).to.equal(
+        'House with id 34 does not exist'
+      );
     });
   });
 });

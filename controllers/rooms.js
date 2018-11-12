@@ -1,4 +1,4 @@
-const { Room } = require('../models');
+const { Room, House } = require('../models');
 const Boom = require('boom');
 
 module.exports = {
@@ -20,7 +20,8 @@ module.exports = {
       if (!room) {
         return res
           .response({
-            message: `room with ${id} does not exist`,
+            error: 'Not Found',
+            message: `Room with id ${id} does not exist`,
             success: false
           })
           .code(404);
@@ -34,6 +35,18 @@ module.exports = {
   },
   create: async (req, res) => {
     try {
+      const { house_id } = req.payload;
+      const house = await House.query().findById(house_id);
+      if (!house) {
+        return res
+          .response({
+            error: 'Not Found',
+            message: `House with id ${house_id} does not exist`,
+            success: false
+          })
+          .code(404);
+      }
+
       const room = await Room.query().insert(req.payload);
       return res.response({ room, success: true }).code(201);
     }
@@ -49,17 +62,31 @@ module.exports = {
       if (!room) {
         return res
           .response({
-            message: `room with ${id} does not exist`,
+            error: 'Not Found',
+            message: `Room with id ${id} does not exist`,
             success: false
           })
           .code(404);
+      }
+
+      const { house_id } = req.payload;
+      if (house_id) {
+        const house = await House.query().findById(house_id);
+        if (!house) {
+          return res
+            .response({
+              error: 'Not Found',
+              message: `House with id ${house_id} does not exist`,
+              success: false
+            })
+            .code(404);
+        }
       }
 
       room = await Room.query().patchAndFetchById(id, req.payload);
       return res.response({ room, success: true }).code(200);
     }
     catch (err) {
-      req.log('error updating a room', err);
       return Boom.internal(err.message);
     }
   },
@@ -70,7 +97,8 @@ module.exports = {
       if (!room) {
         return res
           .response({
-            message: `room with ${id} does not exist`,
+            error: 'Not Found',
+            message: `Room with id ${id} does not exist`,
             success: false
           })
           .code(404);
@@ -78,7 +106,11 @@ module.exports = {
 
       await Room.query().deleteById(id);
       return res
-        .response({ message: 'room deleted successfully', success: true })
+        .response({
+          error: 'Not Found',
+          message: 'Room deleted successfully',
+          success: true
+        })
         .code(200);
     }
     catch (err) {

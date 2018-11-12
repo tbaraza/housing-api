@@ -21,7 +21,7 @@ module.exports = {
         return res
           .response({
             error: 'Not Found',
-            message: `House with ${id} does not exist`,
+            message: `House with id ${id} does not exist`,
             success: false
           })
           .code(404);
@@ -51,7 +51,7 @@ module.exports = {
         return res
           .response({
             error: 'Not Found',
-            message: `House with ${id} does not exist`,
+            message: `House with id ${id} does not exist`,
             success: false
           })
           .code(404);
@@ -73,7 +73,7 @@ module.exports = {
         return res
           .response({
             error: 'Not Found',
-            message: `House with ${id} does not exist`,
+            message: `House with id ${id} does not exist`,
             success: false
           })
           .code(404);
@@ -87,7 +87,6 @@ module.exports = {
         .code(200);
     }
     catch (err) {
-      console.log('Booom', err);
       return Boom.internal(err.message);
     }
   }
